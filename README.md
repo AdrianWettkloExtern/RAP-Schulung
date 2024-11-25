@@ -1,9 +1,4 @@
 
-# Begleitmaterialien zur RAP Schulung
-
-## Datenmodell
-TODO
-
 ## Core Data Services im RAP
 
 ### Root View Entities
