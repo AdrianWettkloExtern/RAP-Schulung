@@ -7,7 +7,7 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'RAP Example: Root View'
 define root view entity ZREX_I_Carrier
-  as select from ZMIND2E_I_Carrier
+  as select from ZOSO_I_Carrier
   composition [0..*] of ZREX_I_Connection as _Connection
 {
   key AirlineId as CarrierId,
@@ -31,7 +31,7 @@ define root view entity ZREX_I_Carrier
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'RAP Example: Child View'
 define view entity ZREX_I_Connection
-  as select from ZMIND2E_I_Connection
+  as select from ZOSO_I_Connection
   association to parent ZREX_I_Carrier as _Carrier on $projection.CarrierId = _Carrier.CarrierId
   composition [0..*] of ZREX_I_Flight  as _Flight
 {
@@ -55,7 +55,7 @@ define view entity ZREX_I_Connection
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'RAP Example: Grant Child View'
 define view entity ZREX_I_Flight
-  as select from ZMIND2E_I_Flight
+  as select from ZOSO_I_Flight
   association     to parent ZREX_I_Connection as _Connection on  $projection.CarrierId    = _Connection.CarrierId
                                                              and $projection.ConnectionID = _Connection.ConnectionId
   association [1] to ZREX_I_Carrier           as _Carrier    on  $projection.CarrierId = _Carrier.CarrierId
@@ -80,7 +80,7 @@ define view entity ZREX_I_Flight
 ### Annotationen
 
 ```cds
-define view entity ZMIND2E_I_Flight
+define view entity ZOSO_I_Flight
   as select from zmind2_flight
   association [0..1] to I_Currency as _Currency on $projection.CurrencyCode = _Currency.Currency
 {
@@ -113,7 +113,7 @@ define view I_Currency
 #### Annotationen für administrative Felder
 
 ```cds
-define view entity ZMIND2E_I_Carrier
+define view entity ZOSO_I_Carrier
   as select from zmind2_carrier
 {
   key carrier_id            as AirlineId,
@@ -1606,8 +1606,8 @@ ENDCLASS.
 ```cds
 @EndUserText.label: 'Carrier'
 @MappingRole: true
-define role ZMIND2E_C_CARRIER {
-    grant select on ZMIND2E_C_CARRIER
+define role ZOSO_C_CARRIER {
+    grant select on ZOSO_C_CARRIER
     where (AirlineId) = aspect pfcg_auth(S_CARRID, CARRID, ACTVT = '03' );
     
 }
